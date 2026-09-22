@@ -57,6 +57,17 @@ function validPhone(value) {
   return /^\+\d{1,3}\s[\d\s().-]{6,}$/.test(value.trim());
 }
 
+function validWebsite(value) {
+  const normalized = value.trim();
+  if (!normalized) return true;
+  try {
+    const url = new URL(/^https?:\/\//i.test(normalized) ? normalized : `https://${normalized}`);
+    return Boolean(url.hostname && url.hostname.includes('.'));
+  } catch {
+    return false;
+  }
+}
+
 function validateForm() {
   clearErrors();
   const invalidIds = [];
@@ -78,7 +89,7 @@ function validateForm() {
   if (!hasTwoWords(contactName.value)) invalid('contactName', messages.contactName);
   if (!email.validity.valid) invalid('corporateEmail', messages.corporateEmail);
   if (!validPhone(phone.value)) invalid('phone', messages.phone);
-  if (website.value && !website.validity.valid) invalid('website', messages.website);
+  if (!validWebsite(website.value)) invalid('website', messages.website);
   if (!country.value) invalid('country', messages.country);
   if (!productType.value) invalid('productType', messages.productType);
   if (!volume.value) invalid('volume', messages.volume);
