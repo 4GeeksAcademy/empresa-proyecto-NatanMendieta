@@ -1,5 +1,4 @@
 const form = document.querySelector('#application-form');
-const summary = document.querySelector('#form-summary');
 const success = document.querySelector('#success-message');
 const comments = document.querySelector('#comments');
 const volume = document.querySelector('#volume');
@@ -27,6 +26,7 @@ function setError(id, message) {
   if (error) {
     error.textContent = message;
     error.classList.toggle('hidden', !message);
+    error.style.display = message ? 'block' : 'none';
   }
   if (field) field.setAttribute('aria-invalid', message ? 'true' : 'false');
   if (field && field.tagName !== 'SELECT') {
@@ -39,14 +39,13 @@ function clearErrors() {
   document.querySelectorAll('[id$="-error"]').forEach(error => {
     error.textContent = '';
     error.classList.add('hidden');
+    error.style.display = 'none';
   });
   document.querySelectorAll('[aria-invalid="true"]').forEach(field => {
     field.setAttribute('aria-invalid', 'false');
     field.classList.remove('border-red-500');
     field.classList.add('border-slate-300');
   });
-  summary.classList.add('hidden');
-  summary.innerHTML = '';
 }
 
 function hasTwoWords(value) {
@@ -94,21 +93,23 @@ function validateForm() {
   if (!productType.value) invalid('productType', messages.productType);
   if (!volume.value) invalid('volume', messages.volume);
   if (!serviceInputs.some(input => input.checked)) {
-    document.querySelector('#services-error').textContent = messages.services;
-    document.querySelector('#services-error').classList.remove('hidden');
+    const servicesError = document.querySelector('#services-error');
+    servicesError.textContent = messages.services;
+    servicesError.classList.remove('hidden');
+    servicesError.style.display = 'block';
     invalidIds.push('services-group');
   }
   if (!thirdPartyInputs.some(input => input.checked)) {
-    document.querySelector('#thirdParty-error').textContent = messages.thirdParty;
-    document.querySelector('#thirdParty-error').classList.remove('hidden');
+    const thirdPartyError = document.querySelector('#thirdParty-error');
+    thirdPartyError.textContent = messages.thirdParty;
+    thirdPartyError.classList.remove('hidden');
+    thirdPartyError.style.display = 'block';
     invalidIds.push('thirdPartyGroup');
   }
   if (comments.value.length > 500) invalid('comments', `Los comentarios no pueden exceder 500 caracteres (quedan ${500 - comments.value.length})`);
   if (!privacy.checked) invalid('privacy', messages.privacy);
 
   if (invalidIds.length) {
-    summary.innerHTML = `<h2 class="font-bold">Revisa estos campos:</h2><ul class="mt-2 list-disc pl-5">${invalidIds.map(id => `<li><a class="underline" href="#${id}">${document.querySelector(`label[for="${id}"]`)?.textContent || 'Información del formulario'}</a></li>`).join('')}</ul>`;
-    summary.classList.remove('hidden');
     document.getElementById(invalidIds[0]).focus();
     return false;
   }
@@ -121,6 +122,7 @@ function updateCounter() {
   const tooLong = comments.value.length > 500;
   error.textContent = tooLong ? `Los comentarios no pueden exceder 500 caracteres (quedan ${500 - comments.value.length})` : '';
   error.classList.toggle('hidden', !tooLong);
+  error.style.display = tooLong ? 'block' : 'none';
   comments.setAttribute('aria-invalid', tooLong ? 'true' : 'false');
 }
 
@@ -151,6 +153,9 @@ comments.addEventListener('input', updateCounter);
 volume.addEventListener('change', updateVolumeWarning);
 
 form.querySelectorAll('input, select, textarea').forEach(field => {
+  field.addEventListener('focus', () => {
+    if (field.id) validateForm();
+  });
   field.addEventListener('blur', () => {
     if (field.id === 'comments') updateCounter();
     else if (field.id) validateForm();
