@@ -67,7 +67,7 @@ function validWebsite(value) {
   }
 }
 
-function validateForm() {
+function validateForm(shouldFocusFirstError = true) {
   clearErrors();
   const invalidIds = [];
   const companyName = document.querySelector('#companyName');
@@ -110,7 +110,7 @@ function validateForm() {
   if (!privacy.checked) invalid('privacy', messages.privacy);
 
   if (invalidIds.length) {
-    document.getElementById(invalidIds[0]).focus();
+    if (shouldFocusFirstError) document.getElementById(invalidIds[0]).focus();
     return false;
   }
   return true;
@@ -153,12 +153,9 @@ comments.addEventListener('input', updateCounter);
 volume.addEventListener('change', updateVolumeWarning);
 
 form.querySelectorAll('input, select, textarea').forEach(field => {
-  field.addEventListener('focus', () => {
-    if (field.id) validateForm();
-  });
   field.addEventListener('blur', () => {
     if (field.id === 'comments') updateCounter();
-    else if (field.id) validateForm();
+    else if (field.id) validateForm(false);
   });
 });
 
