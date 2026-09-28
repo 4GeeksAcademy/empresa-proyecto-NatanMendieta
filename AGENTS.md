@@ -7,7 +7,7 @@
 3. Lee `memory-bank/techContext.md`; si esta vacio, no supongas detalles tecnicos que no esten documentados.
 4. Lee `memory-bank/progress.md` para distinguir lo completado de lo pendiente.
 5. Lee el `README.md` de la raiz y el `README.md` de cada carpeta en la que vayas a trabajar. El README raiz indica que cada carpeta tiene una responsabilidad y que cada nueva aplicacion, servicio, agente o pipeline debe tener su subcarpeta y README.
-6. Lee las reglas aplicables de `.agents/rules/` si esa carpeta existe. Si no existe, no supongas reglas adicionales.
+6. Si existe `.agents/rules/`, lee las reglas Markdown cuyo apartado `## Alcance` incluya alguna ruta que vayas a crear, editar, mover o revisar. Las rutas de alcance determinan cuándo aplica cada regla; si falta el apartado o no puedes determinar si una regla aplica, léela y aclara la duda antes de editar.
 7. Antes de editar, revisa `git status` y la rama actual. Preserva los cambios locales preexistentes y no los atribuyas a este trabajo sin evidencia.
 
 ## Flujo obligatorio antes de cada commit
