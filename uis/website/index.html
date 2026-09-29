@@ -3,86 +3,291 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrackFlow | Logística que mantiene tu negocio en movimiento</title>
-  <meta name="description" content="Fulfillment, última milla y logística inversa para e-commerce en Estados Unidos y España.">
+  <meta name="description" content="TrackFlow gestiona almacenes, preparación de pedidos, última milla y devoluciones para marcas de e-commerce en Estados Unidos y España.">
+  <meta name="theme-color" content="#704238">
+  <title>TrackFlow | Logística de almacén y última milla</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --ink: #704238; --orange: #e9a58f; --cream: #fff3ee; --teal: #b96f5c; }
+    :root {
+      color-scheme: light;
+      --ink: #704238;
+      --forest: #704238;
+      --green: #b96f5c;
+      --mint: #fff0ea;
+      --coral: #e9a58f;
+      --sun: #f2c0af;
+      --paper: #fff3ee;
+      --white: #fffaf8;
+      --content: 1160px;
+    }
+
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; }
-    h1, h2, h3, .brand { font-family: 'Space Grotesk', sans-serif; }
-    .reveal { opacity: 1; transform: translateY(0); }
-    .js-reveal .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-    .js-reveal .reveal.is-visible { opacity: 1; transform: translateY(0); }
-    .hero-grid { background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 42px 42px; }
-    [class~="bg-[#116466]"] { background-color: #b96f5c !important; }
-    [class~="bg-[#168083]"] { background-color: #e9a58f !important; }
-    [class~="bg-[#0d4f55]"] { background-color: #704238 !important; }
-    [class~="bg-[#e3f2ee]"] { background-color: #fff0ea !important; }
-    [class~="bg-[#183b56]"] { background-color: #704238 !important; }
-    [class~="hover:bg-[#116466]"]:hover { background-color: #8d5143 !important; }
-    [class~="text-[#287c78]"] { color: #a86755 !important; }
-    [class~="border-[#2f8f83]"] { border-color: #d9907b !important; }
-    [class~="border-[#eab308]"] { border-color: #e7ad91 !important; }
-    [class~="bg-orange-500"] { background-color: #e9a58f !important; }
-    [class~="hover:bg-orange-400"]:hover { background-color: #efb8a5 !important; }
-    [class~="text-orange-100"] { color: #fff0ea !important; }
-    [class~="text-orange-200"] { color: #f7d2c5 !important; }
-    [class~="text-orange-300"] { color: #f2c0af !important; }
-    [class~="text-orange-600"] { color: #a86755 !important; }
-    [class~="text-orange-700"] { color: #8d5143 !important; }
-    [class~="hover:text-orange-900"]:hover { color: #704238 !important; }
-    [class~="border-orange-500"] { border-color: #e9a58f !important; }
-    [class~="ring-orange-300"] { --tw-ring-color: #f2c0af !important; }
-    [class~="shadow-orange-950\/20"] { --tw-shadow-color: rgb(112 66 56 / 20%) !important; }
-    [class~="text-slate-100"] { color: #fffaf7 !important; }
-    [class~="text-slate-200"] { color: #fff0ea !important; }
-    [class~="text-slate-600"] { color: #765b52 !important; }
-    [class~="bg-white"] { background-color: #fffaf8 !important; }
-    #historias [class~="max-w-sm"][class~="text-slate-600"] { display: none !important; }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; transition: none; } }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.6;
+    }
+    h1, h2, h3, .brand { font-family: "Space Grotesk", sans-serif; }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+    .skip-link {
+      position: absolute;
+      z-index: 5;
+      top: 8px;
+      left: 8px;
+      padding: 10px 14px;
+      transform: translateY(-150%);
+      background: var(--white);
+      color: var(--forest);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .shell { width: min(var(--content), calc(100% - 40px)); margin-inline: auto; }
+    .site-header { position: relative; z-index: 2; background: var(--forest); color: var(--white); }
+    .site-nav { display: flex; min-height: 82px; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--white); font-size: 21px; font-weight: 700; text-decoration: none; }
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 6px;
+      background: var(--coral);
+      color: var(--forest);
+      font-size: 14px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { color: #fff0ea; font-size: 14px; font-weight: 600; text-decoration: none; }
+    .nav-links a:hover { color: var(--sun); }
+    .nav-action, .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .nav-action, .button--accent { background: var(--coral); color: var(--ink); }
+    .nav-action:hover, .button--accent:hover { background: var(--sun); transform: translateY(-2px); }
+    .button--light { background: var(--white); color: var(--forest); }
+    .button--light:hover { background: var(--mint); transform: translateY(-2px); }
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: min(620px, calc(100svh - 145px));
+      align-items: center;
+      overflow: hidden;
+      background: var(--forest);
+      color: var(--white);
+    }
+    .hero-image, .hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .hero-image { object-fit: cover; object-position: center 48%; }
+    .hero-shade { background: rgb(112 66 56 / 78%); }
+    .hero-content { position: relative; z-index: 1; padding-block: 74px 90px; }
+    .eyebrow { margin: 0; color: var(--green); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .hero .eyebrow { color: var(--sun); }
+    .hero h1 { max-width: 760px; margin: 18px 0 0; font-size: 58px; line-height: 1.04; }
+    .hero-copy { max-width: 660px; margin: 22px 0 0; color: #fff0ea; font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .section { padding-block: 84px; }
+    .section--white { background: var(--white); }
+    .section--forest { background: var(--forest); color: var(--white); }
+    .section-heading { max-width: 730px; margin: 12px 0 0; font-size: 40px; line-height: 1.12; }
+    .section-intro { max-width: 700px; margin: 18px 0 0; color: #765b52; font-size: 17px; }
+    .section--forest .eyebrow { color: var(--sun); }
+    .section--forest .section-intro { color: #fff0ea; }
+    .flow-list, .capability-list, .location-list { margin: 42px 0 0; padding: 0; list-style: none; }
+    .flow-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #d9907b; }
+    .flow-step { min-height: 184px; padding: 24px 22px 18px 0; border-bottom: 1px solid #d9907b; }
+    .flow-step + .flow-step { padding-left: 22px; border-left: 1px solid #d9907b; }
+    .step-number { color: var(--green); font-size: 13px; font-weight: 700; }
+    .flow-step h3, .capability h3, .location h3 { margin: 13px 0 0; font-size: 21px; line-height: 1.2; }
+    .flow-step p, .capability p, .location p { margin: 10px 0 0; color: #765b52; font-size: 15px; }
+    .capability-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+    .capability { padding-top: 19px; border-top: 4px solid var(--coral); }
+    .capability:nth-child(2) { border-color: var(--green); }
+    .capability:nth-child(3) { border-color: var(--sun); }
+    .locations-lead { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: end; gap: 36px; }
+    .locations-lead .section-heading { margin-top: 0; }
+    .location-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+    .location { padding: 22px 0 0; border-top: 1px solid rgb(255 255 255 / 42%); }
+    .location-label { color: var(--sun); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .section--forest .location p { color: #fff0ea; }
+    .promise { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px; }
+    .promise h2 { max-width: 760px; margin: 12px 0 0; font-size: 34px; line-height: 1.16; }
+    .site-footer { padding-block: 26px; background: var(--forest); color: #fff0ea; font-size: 13px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-inner p { margin: 0; }
+    @media (max-width: 760px) {
+      .site-nav { min-height: 0; flex-wrap: wrap; gap: 12px 18px; padding-block: 15px; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; gap: 12px; padding-top: 10px; border-top: 1px solid rgb(255 255 255 / 20%); }
+      .nav-links a { font-size: 13px; }
+      .nav-action { min-height: 40px; padding: 8px 11px; font-size: 12px; }
+      .hero { min-height: min(560px, calc(100svh - 150px)); }
+      .hero-content { padding-block: 58px 72px; }
+      .hero h1 { max-width: 600px; font-size: 42px; }
+      .hero-copy { font-size: 16px; }
+      .section { padding-block: 62px; }
+      .section-heading { font-size: 33px; }
+      .flow-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-step { min-height: 160px; padding: 20px 14px 18px 0; }
+      .flow-step + .flow-step { padding-left: 14px; }
+      .flow-step:nth-child(3) { padding-left: 0; border-left: 0; }
+      .capability-list { grid-template-columns: 1fr; gap: 25px; }
+      .locations-lead, .promise { grid-template-columns: 1fr; gap: 14px; }
+      .location-list { gap: 18px; }
+      .promise h2 { font-size: 30px; }
+      .promise .button { justify-self: start; }
+    }
+    @media (max-width: 420px) {
+      .shell { width: min(var(--content), calc(100% - 32px)); }
+      .brand { font-size: 18px; }
+      .brand-mark { width: 34px; }
+      .hero h1 { font-size: 36px; }
+      .hero-actions { align-items: stretch; flex-direction: column; }
+      .hero-actions .button { width: 100%; }
+      .location-list { grid-template-columns: 1fr; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
   </style>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"TrackFlow","description":"Gestión de almacenes y entregas de última milla para e-commerce","url":"https://trackflow.com","foundingDate":"2009","areaServed":[{"@type":"Country","name":"Estados Unidos"},{"@type":"Country","name":"España"}],"contactPoint":{"@type":"ContactPoint","telephone":"+1-213-555-0147","contactType":"sales","availableLanguage":["Spanish","English"]}}
-  </script>
 </head>
 <body>
-  <header class="border-b border-white/10 bg-[#116466] text-white">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8" aria-label="Navegación principal">
-      <a href="index.html" class="brand flex items-center gap-3 text-2xl font-bold tracking-tight focus:outline-none focus:ring-2 focus:ring-orange-300"><span class="grid h-9 w-9 place-items-center rounded-lg bg-orange-500 text-base text-white">TF</span>TrackFlow</a>
-      <div class="hidden gap-7 text-sm font-medium md:flex"><a href="#servicios" class="transition hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300">Servicios</a><a href="#historias" class="transition hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300">Resultados</a><a href="#cobertura" class="transition hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-300">Cobertura</a></div>
-      <a href="application.html" class="rounded-md bg-orange-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange-950/20 transition hover:-translate-y-0.5 hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-300">Hablar con un experto</a>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <nav class="site-nav shell" aria-label="Navegación principal">
+      <a class="brand" href="/" aria-label="TrackFlow, inicio">
+        <span class="brand-mark" aria-hidden="true">TF</span>
+        <span>TrackFlow</span>
+      </a>
+      <div class="nav-links">
+        <a href="#operacion">La operación</a>
+        <a href="#capacidades">Qué hacemos</a>
+        <a href="#ubicaciones">Ubicaciones</a>
+      </div>
+      <a class="nav-action" href="#flujo">Conocer el proceso <span aria-hidden="true">→</span></a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero-grid overflow-hidden bg-[#116466] text-white" aria-labelledby="hero-title">
-      <div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:px-8 lg:py-24">
-        <div class="reveal"><p class="mb-5 text-sm font-bold uppercase tracking-[0.2em] text-orange-300">Logística sin puntos ciegos</p><h1 id="hero-title" class="max-w-3xl text-5xl font-bold leading-[1.04] tracking-tight sm:text-7xl">Tu inventario en movimiento. Tu marca en control.</h1><p class="mt-6 max-w-2xl text-lg leading-8 text-slate-200">Fulfillment, última milla y devoluciones coordinados desde una sola operación para que puedas crecer en Estados Unidos y España.</p><a href="application.html" class="mt-8 inline-flex rounded-md bg-orange-500 px-6 py-3.5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-300">Diseñar mi operación <span class="ml-3" aria-hidden="true">→</span></a></div>
-        <div class="reveal relative" style="transition-delay: 120ms"><div class="overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-2xl"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1100&q=75" alt="Operación de almacén con paquetes listos para despacho" class="h-[360px] w-full object-cover sm:h-[470px]"><div class="grid grid-cols-2 gap-px bg-white/20"><div class="bg-[#168083] p-5"><p class="text-3xl font-bold text-orange-300">98.7%</p><p class="mt-1 text-sm text-slate-200">pedidos a tiempo</p></div><div class="bg-[#168083] p-5"><p class="text-3xl font-bold text-orange-300">2 países</p><p class="mt-1 text-sm text-slate-200">una sola visibilidad</p></div></div></div></div>
+  <main id="contenido">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1800&q=80" alt="" aria-hidden="true" fetchpriority="high">
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-content shell">
+        <p class="eyebrow">Almacenes · última milla · devoluciones</p>
+        <h1 id="hero-title">Logística de almacén y última milla para e-commerce.</h1>
+        <p class="hero-copy">TrackFlow almacena inventario, prepara pedidos, coordina envíos y gestiona devoluciones para marcas en Estados Unidos y España.</p>
+        <div class="hero-actions">
+          <a class="button button--accent" href="#operacion">Ver cómo opera <span aria-hidden="true">↓</span></a>
+          <a class="button button--light" href="#ubicaciones">Los Ángeles y Zaragoza</a>
+        </div>
       </div>
     </section>
 
-    <section id="servicios" class="py-20 sm:py-24" aria-labelledby="services-title"><div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="reveal max-w-2xl"><p class="text-sm font-bold uppercase tracking-[0.2em] text-orange-600">Una red que trabaja contigo</p><h2 id="services-title" class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Menos fricción. Más entregas que dejan huella.</h2></div><div class="mt-12 grid gap-5 md:grid-cols-3"><article class="reveal border-t-4 border-orange-500 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"><p class="text-4xl" aria-hidden="true">▦</p><h3 class="mt-6 text-2xl font-bold">Fulfillment</h3><p class="mt-3 leading-7 text-slate-600">Almacenamos, preparamos y despachamos cada pedido con inventario sincronizado en tiempo real.</p><a href="application.html" class="mt-6 inline-block font-bold text-orange-700 hover:text-orange-900">Conocer el servicio →</a></article><article class="reveal border-t-4 border-[#2f8f83] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl" style="transition-delay: 100ms"><p class="text-4xl" aria-hidden="true">↗</p><h3 class="mt-6 text-2xl font-bold">Última milla</h3><p class="mt-3 leading-7 text-slate-600">Conectamos carriers confiables y seguimiento unificado para que cada entrega llegue con contexto.</p><a href="application.html" class="mt-6 inline-block font-bold text-orange-700 hover:text-orange-900">Conocer el servicio →</a></article><article class="reveal border-t-4 border-[#eab308] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl" style="transition-delay: 200ms"><p class="text-4xl" aria-hidden="true">↺</p><h3 class="mt-6 text-2xl font-bold">Logística inversa</h3><p class="mt-3 leading-7 text-slate-600">Convertimos devoluciones en una experiencia clara, medible y lista para volver a vender.</p><a href="application.html" class="mt-6 inline-block font-bold text-orange-700 hover:text-orange-900">Conocer el servicio →</a></article></div></div></section>
+    <section class="section section--white" id="operacion" aria-labelledby="operation-title">
+      <div class="shell">
+        <p class="eyebrow">Del pedido a la devolución</p>
+        <h2 class="section-heading" id="operation-title">Una operación logística a cargo de TrackFlow.</h2>
+        <p class="section-intro">Para las marcas que trabajan con TrackFlow, la operación abarca desde que se recibe un pedido hasta que se entrega o vuelve.</p>
+        <ol class="flow-list" id="flujo">
+          <li class="flow-step">
+            <span class="step-number">01</span>
+            <h3>Almacenar</h3>
+            <p>El inventario de las marcas se guarda en los almacenes de Los Ángeles y Zaragoza.</p>
+          </li>
+          <li class="flow-step">
+            <span class="step-number">02</span>
+            <h3>Preparar</h3>
+            <p>Los pedidos se recogen de las estanterías y se empacan para su envío.</p>
+          </li>
+          <li class="flow-step">
+            <span class="step-number">03</span>
+            <h3>Enviar</h3>
+            <p>Los paquetes se entregan a la red de transportistas con la que trabaja TrackFlow.</p>
+          </li>
+          <li class="flow-step">
+            <span class="step-number">04</span>
+            <h3>Gestionar devoluciones</h3>
+            <p>TrackFlow también se ocupa de los productos que vuelven.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
 
-    <section id="historias" class="bg-[#e3f2ee] py-20 sm:py-24" aria-labelledby="stories-title"><div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div class="reveal"><p class="text-sm font-bold uppercase tracking-[0.2em] text-[#287c78]">Historias de operación</p><h2 id="stories-title" class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Resultados que se sienten en caja.</h2></div><p class="max-w-sm text-slate-600">Casos ficticios inspirados en retos reales de marcas e-commerce.</p></div><div class="mt-12 grid gap-6 lg:grid-cols-3"><article class="reveal overflow-hidden rounded-xl bg-white shadow-sm"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=75" alt="Productos de moda preparados para envío" loading="lazy" class="h-48 w-full object-cover"><div class="p-6"><p class="text-sm font-bold text-orange-600">Moda · España</p><h3 class="mt-2 text-2xl font-bold">Línea Norte</h3><p class="mt-3 text-slate-600">“Pasamos de 48 a 12 horas de preparación media y recuperamos visibilidad sobre cada devolución.”</p><p class="mt-5 font-bold text-[#287c78]">+31% pedidos procesados</p></div></article><article class="reveal overflow-hidden rounded-xl bg-white shadow-sm" style="transition-delay: 100ms"><img src="https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&w=800&q=75" alt="Caja de producto tecnológico lista para envío" loading="lazy" class="h-48 w-full object-cover"><div class="p-6"><p class="text-sm font-bold text-orange-600">Electrónica · EE. UU.</p><h3 class="mt-2 text-2xl font-bold">Voltio Home</h3><p class="mt-3 text-slate-600">“Una vista de inventario para dos mercados nos permitió abrir nuevas campañas sin improvisar.”</p><p class="mt-5 font-bold text-[#287c78]">-22% incidencias de entrega</p></div></article><article class="reveal overflow-hidden rounded-xl bg-white shadow-sm" style="transition-delay: 200ms"><img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=800&q=75" alt="Paquetes de cosmética preparados en una mesa" loading="lazy" class="h-48 w-full object-cover"><div class="p-6"><p class="text-sm font-bold text-orange-600">Cosmética · Binacional</p><h3 class="mt-2 text-2xl font-bold">Ritual Lab</h3><p class="mt-3 text-slate-600">“La logística inversa dejó de ser un coste opaco y se convirtió en una segunda oportunidad de venta.”</p><p class="mt-5 font-bold text-[#287c78]">+18% recuperación de stock</p></div></article></div></div></section>
+    <section class="section" id="capacidades" aria-labelledby="capabilities-title">
+      <div class="shell">
+        <p class="eyebrow">Qué hacemos</p>
+        <h2 class="section-heading" id="capabilities-title">Almacén, transporte y logística inversa.</h2>
+        <ul class="capability-list">
+          <li class="capability">
+            <h3>Operaciones de almacén</h3>
+            <p>Almacenamiento de inventario, preparación de pedidos y coordinación de su salida desde los almacenes.</p>
+          </li>
+          <li class="capability">
+            <h3>Última milla</h3>
+            <p>Gestión de transportistas, seguimiento de entregas y atención de incidencias de envío.</p>
+          </li>
+          <li class="capability">
+            <h3>Devoluciones</h3>
+            <p>Gestión de los productos que regresan, desde la revisión hasta las decisiones sobre su siguiente paso.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-    <section id="cobertura" class="bg-[#116466] py-20 text-white sm:py-24" aria-labelledby="coverage-title"><div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="reveal max-w-2xl"><p class="text-sm font-bold uppercase tracking-[0.2em] text-orange-300">Cobertura binacional</p><h2 id="coverage-title" class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Cerca de tus clientes, donde importa.</h2></div><div class="mt-12 grid gap-5 md:grid-cols-2"><article class="reveal rounded-xl border border-white/15 bg-white/10 p-7"><p class="text-sm font-bold uppercase tracking-wider text-orange-300">01 · Estados Unidos</p><h3 class="mt-4 text-3xl font-bold">Los Ángeles</h3><p class="mt-3 leading-7 text-slate-200">Almacén estratégico, cobertura nacional y conexión con UPS, FedEx y DHL.</p></article><article class="reveal rounded-xl border border-white/15 bg-white/10 p-7" style="transition-delay: 100ms"><p class="text-sm font-bold uppercase tracking-wider text-orange-300">02 · España</p><h3 class="mt-4 text-3xl font-bold">Zaragoza</h3><p class="mt-3 leading-7 text-slate-200">Una posición central para servir la península y las islas con MRW, SEUR y DHL.</p></article></div></div></section>
+    <section class="section section--forest" id="ubicaciones" aria-labelledby="locations-title">
+      <div class="shell">
+        <div class="locations-lead">
+          <div>
+            <p class="eyebrow">Estados Unidos · España</p>
+            <h2 class="section-heading" id="locations-title">Dos almacenes, en dos mercados.</h2>
+          </div>
+          <p class="section-intro">TrackFlow opera en Estados Unidos y España, con almacenes en Los Ángeles y Zaragoza.</p>
+        </div>
+        <ul class="location-list">
+          <li class="location">
+            <span class="location-label">Estados Unidos</span>
+            <h3>Los Ángeles</h3>
+          </li>
+          <li class="location">
+            <span class="location-label">España</span>
+            <h3>Zaragoza</h3>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-    <section class="bg-orange-500 py-16 text-white"><div class="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-4 sm:px-6 md:flex-row md:items-center lg:px-8"><div><p class="text-sm font-bold uppercase tracking-[0.2em] text-orange-100">Tu próximo envío empieza aquí</p><h2 class="mt-3 text-3xl font-bold sm:text-4xl">Haz que la logística sea una ventaja.</h2></div><a href="application.html" class="inline-flex shrink-0 rounded-md bg-[#183b56] px-6 py-3.5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#116466] focus:outline-none focus:ring-2 focus:ring-white">Solicitar diagnóstico →</a></div></section>
+    <section class="section section--white" aria-labelledby="promise-title">
+      <div class="shell promise">
+        <div>
+          <p class="eyebrow">TrackFlow</p>
+          <h2 id="promise-title">Desde que llega un pedido hasta que se entrega o vuelve.</h2>
+        </div>
+        <a class="button button--accent" href="#operacion">Recorrer la operación <span aria-hidden="true">↑</span></a>
+      </div>
+    </section>
   </main>
 
-  <footer class="bg-[#0d4f55] text-slate-100"><div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-sm sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"><div><p class="brand text-lg font-bold text-white">TrackFlow</p><p class="mt-1">comercial@trackflow.com · Los Ángeles +1 213 555 0147 · Zaragoza +34 976 123 456</p></div><div class="md:text-right"><a href="https://linkedin.com/company/trackflow" class="font-semibold text-orange-200 hover:text-white">LinkedIn</a><p class="mt-1">© 2026 TrackFlow. Todos los derechos reservados.</p></div></div></footer>
-  <script>
-    if ('IntersectionObserver' in window) {
-      document.documentElement.classList.add('js-reveal');
-      const revealItems = document.querySelectorAll('.reveal');
-      const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }), { threshold: 0.12 });
-      revealItems.forEach(item => revealObserver.observe(item));
-    }
-  </script>
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <p class="brand">TrackFlow</p>
+      <p>Logística de almacén y última milla · Estados Unidos y España</p>
+    </div>
+  </footer>
 </body>
 </html>
