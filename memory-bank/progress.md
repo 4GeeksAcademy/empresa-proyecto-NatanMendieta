@@ -2,6 +2,7 @@
 
 ## Estado actual
 
+- Se creo `tsconfig.json` en la raiz para los archivos de `src/`, usando la configuracion minima solicitada. El editor no reporta errores de configuracion; `npx tsc --noEmit` y `npx tsx src/demo.ts` no pudieron ejecutarse porque `npx` no esta instalado. No se modificaron manifiestos ni lockfiles. (2026-11-01)
 - En `feature/domain-models`, se agrego `filterProducts` para combinar criterios de almacen, categoria, estado, rango de costo y bajo stock; `src/demo.ts` ahora comprueba esos filtros y que ordenar transportistas no mute el array. (2026-11-01)
 - `src/README.md` documenta comandos para typecheck y demo. Ambos intentos en este contenedor terminaron con `npx: command not found`, asi que la validacion ejecutable sigue pendiente. (2026-11-01)
 - Se implementó `uis/website/index.html` con contenido de `CONTEXT.md`. Verificación: `curl -fsS -o /dev/null -w 'website_http=%{http_code}\n' http://127.0.0.1:8000/` terminó con código 0 y HTTP 200; el análisis HTML encontró ocho anclas internas y ningún destino faltante. El analizador del editor no informó errores.
