@@ -2,6 +2,9 @@
 
 ## Estado actual
 
+- Se creo `tsconfig.json` en la raiz para los archivos de `src/`, usando la configuracion minima solicitada. El editor no reporta errores de configuracion; `npx tsc --noEmit` y `npx tsx src/demo.ts` no pudieron ejecutarse porque `npx` no esta instalado. No se modificaron manifiestos ni lockfiles. (2026-11-01)
+- En `feature/domain-models`, se agrego `filterProducts` para combinar criterios de almacen, categoria, estado, rango de costo y bajo stock; `src/demo.ts` ahora comprueba esos filtros y que ordenar transportistas no mute el array. (2026-11-01)
+- `src/README.md` documenta comandos para typecheck y demo. Ambos intentos en este contenedor terminaron con `npx: command not found`, asi que la validacion ejecutable sigue pendiente. (2026-11-01)
 - Se implementó `uis/website/index.html` con contenido de `CONTEXT.md`. Verificación: `curl -fsS -o /dev/null -w 'website_http=%{http_code}\n' http://127.0.0.1:8000/` terminó con código 0 y HTTP 200; el análisis HTML encontró ocho anclas internas y ningún destino faltante. El analizador del editor no informó errores.
 - Se creó `uis/backoffice/` como sitio estático separado, con README e información empresarial del briefing. Verificación: `curl -fsS -o /dev/null -w 'backoffice_http=%{http_code}\n' http://127.0.0.1:8001/` terminó con código 0 y HTTP 200; el análisis HTML encontró cinco anclas válidas, sidebar separada y el rango de devoluciones 18–25 % con su contexto. El analizador del editor no informó errores.
 - Servidores de inspección iniciados según los README: `cd uis/website && python3 -m http.server 8000 --bind 0.0.0.0` y `cd uis/backoffice && python3 -m http.server 8001 --bind 0.0.0.0`. Permanecieron activos durante las comprobaciones.
@@ -21,6 +24,7 @@
 
 ## Pendiente
 
+- Ejecutar el typecheck y el demo en un entorno con Node.js/npm; despues de validar y revisar los cambios, solicitar confirmacion explicita antes del commit.
 - Documentar el contexto técnico en [`techContext.md`](techContext.md).
 - Definir qué entregables y criterios de aceptación corresponden al hito actual; `CONTEXT.md` no especifica un hito concreto.
 - No se ejecutaron pruebas automatizadas ni build; el README raíz indica que no hay runner de workspaces, no hay Node/npm/npx disponibles, y `uis/website/validation.js` es un script del formulario que requiere DOM de navegador, no un test runner.
