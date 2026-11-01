@@ -1,5 +1,5 @@
 import type { Carrier, Product, Shipment } from "./types/models";
-import { filterLowStockProducts, filterProductsByCategory, filterProductsByWarehouse, sortCarriersByReliability, sortProductsByStock } from "./utils/collections";
+import { filterLowStockProducts, filterProducts, filterProductsByCategory, filterProductsByWarehouse, sortCarriersByReliability, sortProductsByStock } from "./utils/collections";
 import { binarySearchProductByWeight, findProductBySKU, findShipmentById } from "./utils/search";
 import { calculateAverageShipmentDistance, calculateShippingCost, calculateTotalInventoryValue, countProductsByCategory, findTopCarriers, findMinStock, findMaxStock, groupShipmentsByStatus, scoreCarrierForShipment, selectBestCarrier } from "./utils/transformations";
 import { validateCarrier, validateProduct, validateShipment } from "./utils/validations";
@@ -17,13 +17,17 @@ const carriers: Carrier[] = [
 const shipment: Shipment = { id: "SH-2024-8821", sku: "LAPTOP-DELL-15", quantity: 1, origin: "Zaragoza", destination: {city: "Madrid", country: "Spain", postalCode: "28001", distanceKm: 320}, priority: "Express", declaredValueUSD: 650, carrier: null, status: "Pending", createdAt: new Date("2024-03-15") };
 function check(condition: boolean, description: string): void { if (!condition) throw new Error(description); console.log("✓ " + description); }
 const before: string = JSON.stringify(products);
+const carriersBefore: string = JSON.stringify(carriers);
 check(products.every(p => validateProduct(p).valid), "productos válidos");
 check(carriers.every(c => validateCarrier(c).valid) && validateShipment(shipment).valid, "transportistas y envío válidos");
 check(!validateProduct({...products[0], weightKg: 0}).valid && !validateProduct({...products[0], dimensions: {...products[0].dimensions, heightCm: 201}}).valid, "rechaza peso y dimensiones fuera de rango");
 check(!validateShipment({...shipment, quantity: 0}).valid && !validateCarrier({...carriers[0], onTimeRate: 101}).valid, "rechaza envío y transportista inválidos");
 check(filterProductsByWarehouse(products, "Los Angeles").length === 2 && filterProductsByCategory(products, "Electronics").length === 1 && filterLowStockProducts(products)[0].sku === "LAPTOP-DELL-15", "filtros");
+const combinedFilter = filterProducts(products, { warehouse: "Los Angeles", category: "Fashion", status: "Active", minUnitCostUSD: 30, maxUnitCostUSD: 40 });
+check(combinedFilter.length === 1 && combinedFilter[0].sku === "SHOE-BLK-42", "filtros combinados por almacén, categoría, estado y rango de costo");
 check(sortProductsByStock(products, "asc")[0].stockQuantity === 8 && sortProductsByStock(products, "desc")[0].stockQuantity === 120 && sortCarriersByReliability(carriers, "desc")[0].name === "DHL Express", "ordenamientos");
 check(JSON.stringify(products) === before, "ordenar no modifica los productos originales");
+check(JSON.stringify(carriers) === carriersBefore, "ordenar no modifica los transportistas originales");
 check(findProductBySKU(products, "laptop-dell-15")?.sku === "LAPTOP-DELL-15" && findProductBySKU([], "x") === null && findShipmentById([shipment], shipment.id) === shipment && findShipmentById([], "x") === null, "búsqueda lineal y ausencia");
 const sortedByWeight: Product[] = [...products].sort((a, b) => a.weightKg - b.weightKg);
 check(binarySearchProductByWeight(sortedByWeight, 2.3) === 2 && binarySearchProductByWeight(sortedByWeight, 4) === -1 && binarySearchProductByWeight([], 1) === -1, "búsqueda binaria");

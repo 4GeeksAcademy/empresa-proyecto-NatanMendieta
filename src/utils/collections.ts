@@ -1,4 +1,13 @@
-import type { Carrier, Product, ProductCategory, WarehouseLocation } from "../types/models";
+import type { Carrier, Product, ProductCategory, ProductStatus, WarehouseLocation } from "../types/models";
+
+export interface ProductFilters {
+  warehouse?: WarehouseLocation;
+  category?: ProductCategory;
+  status?: ProductStatus;
+  minUnitCostUSD?: number;
+  maxUnitCostUSD?: number;
+  lowStockOnly?: boolean;
+}
 
 export function filterProductsByWarehouse(products: Product[], warehouse: WarehouseLocation): Product[] {
   return products.filter((product: Product): boolean => product.warehouse === warehouse);
@@ -8,6 +17,15 @@ export function filterProductsByCategory(products: Product[], category: ProductC
 }
 export function filterLowStockProducts(products: Product[]): Product[] {
   return products.filter((product: Product): boolean => product.stockQuantity <= product.minStockThreshold);
+}
+export function filterProducts(products: Product[], filters: ProductFilters): Product[] {
+  return products.filter((product: Product): boolean =>
+    (filters.warehouse === undefined || product.warehouse === filters.warehouse)
+    && (filters.category === undefined || product.category === filters.category)
+    && (filters.status === undefined || product.status === filters.status)
+    && (filters.minUnitCostUSD === undefined || product.unitCostUSD >= filters.minUnitCostUSD)
+    && (filters.maxUnitCostUSD === undefined || product.unitCostUSD <= filters.maxUnitCostUSD)
+    && (filters.lowStockOnly !== true || product.stockQuantity <= product.minStockThreshold));
 }
 export function sortProductsByStock(products: Product[], order: "asc" | "desc"): Product[] {
   const direction: number = order === "asc" ? 1 : -1;
