@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --background: #fafafa;
+  --foreground: #18181b;
+  --accent: #065f46;
+  --border: #e4e4e7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  background-image: linear-gradient(to bottom, #f4f4f5 0, var(--background) 18rem);
+  background-repeat: no-repeat;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.app-container {
+  width: 100%;
+  min-width: 0;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.app-content {
+  flex: 1;
+  padding-block: 2rem 3rem;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  z-index: 50;
+  max-width: calc(100% - 2rem);
+  transform: translateY(-200%);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  color: var(--accent);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .app-container {
+    padding-inline: 2.5rem;
+  }
+
+  .app-content {
+    padding-block: 3rem 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-content {
+    animation: content-enter 180ms ease-out;
+  }
+}
+
+@keyframes content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
